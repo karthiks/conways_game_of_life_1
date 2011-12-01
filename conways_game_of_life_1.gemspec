@@ -1,10 +1,8 @@
 # -*- encoding: utf-8 -*-
 $:.push File.expand_path("../lib", __FILE__)
-require "game_of_life/version"
 
 Gem::Specification.new do |s|
   s.name        = "game_of_life"
-  s.version     = GameOfLife::VERSION
   s.authors     = ["Karthik Sirasanagandla"]
   s.email       = ["karthiks@thoughtworks.com"]
   s.homepage    = ""
