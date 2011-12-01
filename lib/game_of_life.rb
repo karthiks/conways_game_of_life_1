@@ -1,3 +1,5 @@
 module GameOfLife
-  #TODO:
+  def hi
+    "hi"
+  end
 end

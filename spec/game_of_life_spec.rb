@@ -1,5 +1,13 @@
 require 'spec_helper'
 
+class Game
+  include GameOfLife
+end
+
 describe GameOfLife do
-  pending "TODO"
+  subject { Game.new }
+
+  it "should test ok" do
+    subject.hi.should == "hi"
+  end
 end
