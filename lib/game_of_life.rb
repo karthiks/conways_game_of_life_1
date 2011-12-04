@@ -26,8 +26,10 @@ module GameOfLife
         row.each_with_index do |element, ind|
           neighbours_count = count_neighbours(ind,index)
           case neighbours_count
-          when 0..2
+          when 0...2
             new_colony[ind][index] = 0
+          when 2..3
+            new_colony[ind][index] = 1
           end #case
           @colony = new_colony
         end #row.each...
@@ -37,7 +39,7 @@ module GameOfLife
     private
 
     def count_neighbours(row,column)
-      0
+      1
     end
   
   end
