@@ -35,13 +35,12 @@ describe GameOfLife::Game do
         let(:colony_size) { [3,3] }
         let(:generations_to_go) { 1 }
 
-        xit " # should have no survivors for the next generation, if a live cell has less than 2 live neighbours" do
+        it " # should have no survivors for the next generation, if a live cell has less than 2 live neighbours" do
           lives = [ [0,0], [0,1], [2,2] ]
           game = GameOfLife::Game.new(colony_size, lives, generations_to_go)
           game.evolve
           game.colony.should == [[0,0,0], [0,0,0], [0,0,0]]
         end
-
 
       end
 
