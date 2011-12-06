@@ -49,11 +49,11 @@ describe GameOfLife::Game do
         let(:generations_to_go) { 1 }
 
         it " # should carry the same survivor to next generation, if it is a live cell with 2 or 3 neighbours" do
-          lives = [ [0,0], [0,1], [1,0] ]
+          lives = [ [0,0], [0,1], [0,2] ]
           game = GameOfLife::Game.new(colony_size, lives, generations_to_go)
-          game.colony.should == [[1,1,0], [1,0,0], [0,0,0]]
+          game.colony.should == [[1,1,1], [0,0,0], [0,0,0]]
           game.evolve
-          game.colony.should == [[1,1,0], [1,0,0], [0,0,0]]
+          game.colony.should == [[0,1,0], [0,0,0], [0,0,0]]
         end
       end
   end
