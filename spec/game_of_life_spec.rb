@@ -70,5 +70,19 @@ describe GameOfLife::Game do
           game.colony.should == [[0,1,0], [0,1,0], [0,0,0]]
         end
       end
+      
+      context "over-population" do
+        let(:colony_size) { [3,3] }
+        let(:generations_to_go) { 1 }
+
+        it " # should kill existing life and not carry it to next generation, 
+             when a living cell is surrounded by more than 3 neighbours" do
+          lives = [ [1,0], [0,1], [1,1], [2,1], [1,2] ]
+          game = GameOfLife::Game.new(colony_size, lives, generations_to_go)
+          game.colony.should == [[0,1,0], [1,1,1], [0,1,0]]
+          game.evolve
+          game.colony.should == [[1,1,1], [1,0,1], [1,1,1]]
+        end
+      end
   end
 end

@@ -24,7 +24,6 @@ module GameOfLife
 
     def evolve
       new_colony = Array.new(@colony_size[0]) { Array.new(@colony_size[1],0) }
-      puts "@colony -> #{@colony}"
       @colony.each_with_index do |row, y_pos|
         row.each_with_index do |element, x_pos|
           neighbours_count = count_neighbours(x_pos,y_pos)
