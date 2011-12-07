@@ -17,21 +17,24 @@ module GameOfLife
 
     #plant lives in colony
     def seed_colony
-      lives.each do |row,col|
-        colony[row][col] = ALIVE
+      lives.each do |x,y|
+        colony[y][x] = ALIVE
       end
     end
 
     def evolve
       new_colony = Array.new(@colony_size[0]) { Array.new(@colony_size[1],0) }
-      @colony.each_with_index do |row, index|
-        row.each_with_index do |element, ind|
-          neighbours_count = count_neighbours(ind,index)
+      puts "@colony -> #{@colony}"
+      @colony.each_with_index do |row, y_pos|
+        row.each_with_index do |element, x_pos|
+          neighbours_count = count_neighbours(x_pos,y_pos)
           case neighbours_count
           when 0...2
-            new_colony[ind][index] = 0
-          when 2..3
-            new_colony[ind][index] = @colony[ind][index]
+            new_colony[y_pos][x_pos] = 0
+          when 2
+            new_colony[y_pos][x_pos] = @colony[y_pos][x_pos]
+          when 3
+            new_colony[y_pos][x_pos] = 1
           end #case
         end #row.each...
       end #colony.each...
@@ -42,14 +45,17 @@ module GameOfLife
     private
 
     def count_neighbours(row,col)
-      neighbouring_positions = [ [row,col-1], [row+1,col-1], [row+1,col], [row+1,col+1], [row,col+1], [row-1,col+1], [row-1,col], [row-1,col-1] ]
+      neighbouring_positions = [ [row,col-1], 
+                                 [row+1,col-1], [row+1,col], [row+1,col+1], 
+                                 [row,col+1], 
+                                 [row-1,col+1], [row-1,col], [row-1,col-1] ]
       neighbouring_positions = neighbouring_positions.select do |position| 
         (position.first >= 0 && position.first < @colony_size.first) && 
           (position.last >= 0 && position.last < @colony_size.last)
       end
       count = 0
       neighbouring_positions.each do |position|
-        count += 1 if @colony[position.first][position.last] == 1
+        count += 1 if @colony[position.last][position.first] == 1
       end
       count
     end

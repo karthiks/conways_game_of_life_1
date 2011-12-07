@@ -24,7 +24,7 @@ describe GameOfLife::Game do
       it " # should initialize colony with input values" do
         subject.lives.should == lives
         subject.generations_to_go.should == generations_to_go
-        subject.colony.should == [ [0,1,0,0], [0,1,0,0], [0,0,1,0], [0,0,0,0] ]
+        subject.colony.should == [ [0,0,0,0], [1,1,0,0], [0,0,1,0], [0,0,0,0] ]
       end
     end
   end
@@ -36,9 +36,9 @@ describe GameOfLife::Game do
         let(:generations_to_go) { 1 }
 
         it " # should have no survivors for the next generation, if a live cell has less than 2 live neighbours" do
-          lives = [ [0,0], [0,1], [2,2] ]
+          lives = [ [0,0], [2,2] ]
           game = GameOfLife::Game.new(colony_size, lives, generations_to_go)
-          game.colony.should == [[1,1,0], [0,0,0], [0,0,1]]
+          game.colony.should == [[1,0,0], [0,0,0], [0,0,1]]
           game.evolve
           game.colony.should == [[0,0,0], [0,0,0], [0,0,0]]
         end
@@ -49,11 +49,25 @@ describe GameOfLife::Game do
         let(:generations_to_go) { 1 }
 
         it " # should carry the same survivor to next generation, if it is a live cell with 2 or 3 neighbours" do
-          lives = [ [0,0], [0,1], [0,2] ]
+          lives = [ [0,0], [1,1], [0,2] ]
           game = GameOfLife::Game.new(colony_size, lives, generations_to_go)
-          game.colony.should == [[1,1,1], [0,0,0], [0,0,0]]
+          game.colony.should == [[1,0,0], [0,1,0], [1,0,0]]
           game.evolve
-          game.colony.should == [[0,1,0], [0,0,0], [0,0,0]]
+          game.colony.should == [[0,0,0], [1,1,0], [0,0,0]]
+        end
+      end
+
+      context "reproductive-population" do
+        let(:colony_size) { [3,3] }
+        let(:generations_to_go) { 1 }
+
+        it " # should bring about a new life in the next generation, 
+             when a dead cell is surrounded by 3 neighbours" do
+          lives = [ [0,1], [1,0], [2,1] ]
+          game = GameOfLife::Game.new(colony_size, lives, generations_to_go)
+          game.colony.should == [[0,1,0], [1,0,1], [0,0,0]]
+          game.evolve
+          game.colony.should == [[0,1,0], [0,1,0], [0,0,0]]
         end
       end
   end
